@@ -5,6 +5,9 @@ on:
     tags:
       - '*'
 
+env:
+  ARTIFACT: 'release-rust'
+
 jobs:
   publish:
     name: Release for ${{ matrix.os }}
@@ -20,16 +23,16 @@ jobs:
         include:
           - name: linux
             os: ubuntu-latest
-            artifact_name: <name>
-            asset_name: <name>-linux
+            artifact_name: ${{ env.ARTIFACT }}
+            asset_name: ${{ env.ARTIFACT }}-linux
           - name: windows
             os: windows-latest
-            artifact_name: <name>.exe
-            asset_name: <name>-windows
+            artifact_name: ${{ env.ARTIFACT }}.exe
+            asset_name: ${{ env.ARTIFACT }}-windows
           - name: macos
             os: macos-latest
-            artifact_name: <name>
-            asset_name: <name>-macos
+            artifact_name: ${{ env.ARTIFACT }}
+            asset_name: ${{ env.ARTIFACT }}-macos
 
     steps:
     - uses: actions/checkout@v1

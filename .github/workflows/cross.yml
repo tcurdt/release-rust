@@ -51,8 +51,8 @@ jobs:
           command: build
           args: --release --target=${{ matrix.target }}
 
-      - name: Show
-        run: tree target
+      # - name: Show
+      #   run: tree target
 
       # - name: Show Linux
       #   if: ${{ matrix.name != "windows-x86_64-msvc" }}
@@ -62,10 +62,10 @@ jobs:
       #   if: ${{ matrix.name == "windows-x86_64-msvc" }}
       #   run: dir target\*\
 
-      # - name: Upload binaries to release
-      #   uses: svenstaro/upload-release-action@v1-release
-      #   with:
-      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
-      #     file: target/release/${{ matrix.target }}/release-rust
-      #     asset_name: ${{ matrix.name }}
-      #     tag: ${{ github.ref }}
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v1-release
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: target/release/${{ matrix.target }}/release-rust
+          asset_name: ${{ matrix.name }}
+          tag: ${{ github.ref }}

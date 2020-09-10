@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    name: Target ${{ matrix.target }}
+    name: Target ${{ matrix.name }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -52,12 +52,20 @@ jobs:
           args: --release --target=${{ matrix.target }}
 
       - name: Show
-        run: find target
+        run: tree target
+
+      # - name: Show Linux
+      #   if: ${{ matrix.name != "windows-x86_64-msvc" }}
+      #   run: find target
+
+      # - name: Show Windows
+      #   if: ${{ matrix.name == "windows-x86_64-msvc" }}
+      #   run: dir target\*\
 
       # - name: Upload binaries to release
       #   uses: svenstaro/upload-release-action@v1-release
       #   with:
       #     repo_token: ${{ secrets.GITHUB_TOKEN }}
-      #     file: target/release/${{ matrix.artifact_name }}
-      #     asset_name: ${{ matrix.asset_name }}
+      #     file: target/release/${{ matrix.target }}/release-rust
+      #     asset_name: ${{ matrix.name }}
       #     tag: ${{ github.ref }}

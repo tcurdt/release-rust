@@ -1,0 +1,57 @@
+name: Cross
+
+on:
+  push:
+    branches: master
+
+jobs:
+  build:
+    name: Build for ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        name:
+          - linux-x86_64-gnu
+          - linux-armv7-gnu
+        include:
+          - name: linux-x86_64-gnu
+            os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+          - name: linux-armv7-gnu
+            os: ubuntu-latest
+            target: armv7-unknown-linux-gnueabihf
+          # - name: windows
+          #   os: windows-latest
+          # - name: macos
+          #   os: macos-latest
+
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          # profile: minimal
+          toolchain: stable
+          target: ${{ matrix.target }}
+          override: true
+
+      - name: Build
+        uses: actions-rs/cargo@v1
+        with:
+          use-cross: true
+          command: build
+          args: --release --target=${{ matrix.target }}
+
+      - name: Show
+        run: find target
+
+      # - name: Upload binaries to release
+      #   uses: svenstaro/upload-release-action@v1-release
+      #   with:
+      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
+      #     file: target/release/${{ matrix.artifact_name }}
+      #     asset_name: ${{ matrix.asset_name }}
+      #     tag: ${{ github.ref }}

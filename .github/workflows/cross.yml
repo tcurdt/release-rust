@@ -12,8 +12,8 @@ jobs:
       matrix:
         name: # rustup target list
           - linux-x86_64-gnu
-          - linux-armv7-gnu
-          - macos-x86_64
+          # - linux-armv7-gnu
+          # - macos-x86_64
           # - windows-x86_64-msvc
         include:
           - name: linux-x86_64-gnu
@@ -39,19 +39,19 @@ jobs:
       - name: Toolchain
         uses: actions-rs/toolchain@v1
         with:
-          # profile: minimal
+          profile: minimal
           toolchain: stable
           target: ${{ matrix.target }}
           override: true
 
-      # - name: Cache
+      # - name: Cache Toolchain
       #   uses: actions/cache@v2
       #   with:
       #     path: |
-      #       ~/.cargo/registry
-      #       ~/.cargo/git
-      #       target
-      #     key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+      #       ~/.rustup/settings.toml
+      #       ~/.rustup/toolchains/${{ matrix.rust }}-*
+      #       ~/.rustup/update-hashes/${{ matrix.rust }}-*
+      #     key: run-toolchain-rust_${{ matrix.rust }}
 
       - name: Build
         uses: actions-rs/cargo@v1
@@ -60,13 +60,22 @@ jobs:
           command: build
           args: --release --target=${{ matrix.target }}
 
-      - name: Show Linux
+      # - name: Cache Build
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: |
+      #       ~/.cargo/registry
+      #       ~/.cargo/git
+      #       target
+      #     key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Show
         run: find target
 
-      # - name: Upload binaries to release
-      #   uses: svenstaro/upload-release-action@v1-release
-      #   with:
-      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
-      #     file: target/release/${{ matrix.target }}/release-rust
-      #     asset_name: ${{ matrix.name }}
-      #     tag: ${{ github.ref }}
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v1-release
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: target/${{ matrix.target }}/release/release-rust
+          asset_name: ${{ matrix.name }}
+          tag: ${{ github.ref }}

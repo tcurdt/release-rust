@@ -21,7 +21,7 @@ jobs:
         #   # - linux-armv7-gnu
         #   # - macos-x86_64
         #   # - windows-x86_64-msvc
-        # include:
+        include:
         - name: linux-x86_64-gnu
           os: ubuntu-latest
           target: x86_64-unknown-linux-gnu

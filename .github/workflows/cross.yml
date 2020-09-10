@@ -1,4 +1,4 @@
-name: Cross
+name: Building
 
 on:
   push:
@@ -6,13 +6,15 @@ on:
 
 jobs:
   build:
-    name: Build for ${{ matrix.os }}
+    name: Target ${{ matrix.target }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        name:
+        name: # rustup target list
           - linux-x86_64-gnu
           - linux-armv7-gnu
+          - macos-x86_64
+          - windows-x86_64-msvc
         include:
           - name: linux-x86_64-gnu
             os: ubuntu-latest
@@ -20,11 +22,15 @@ jobs:
           - name: linux-armv7-gnu
             os: ubuntu-latest
             target: armv7-unknown-linux-gnueabihf
-          # - name: windows
+          - name: macos-x86_64
+            os: macos-latest
+            target: x86_64-apple-darwin
+          - name: windows-x86_64-msvc
+            os: windows-latest
+            target: x86_64-pc-windows-msvc
+          # - name: windows-x86_64-gnu
           #   os: windows-latest
-          # - name: macos
-          #   os: macos-latest
-
+          #   target: x86_64-pc-windows-gnu
 
     steps:
       - name: Checkout

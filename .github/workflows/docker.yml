@@ -33,11 +33,8 @@ jobs:
         with:
           push: false
           tags: tcurdt/${{ env.project }}:latest
-          platforms:
-            - linux/amd64
-            # - linux/386
-            # - linux/arm64
-            # - linux/arm/v7
+          platforms: linux/amd64
+          # platforms: linux/386,linux/amd64,linux/arm64,linux/arm/v7
           # secrets: |
           #   GIT_AUTH_TOKEN=${{ github.token }}
 

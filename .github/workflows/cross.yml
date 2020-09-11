@@ -100,6 +100,6 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: target/${{ env.project }}-${{ matrix.name }}.tgz
-          asset_name: ${{ env.project }}-${{ matrix.name }}
+          # asset_name: ${{ env.project }}-${{ matrix.name }}
           tag: latest
           # tag: ${{ github.ref }}

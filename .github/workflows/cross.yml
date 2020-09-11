@@ -8,11 +8,11 @@ on:
     branches: master
 
 jobs:
-  # linux:
   # windows:
   # macos:
+  # linux:
   build:
-    name: Target ${{ matrix.name }}
+    name: ${{ matrix.name }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -24,9 +24,11 @@ jobs:
         # - name: linux-armv7-gnu
         #   os: ubuntu-latest
         #   target: armv7-unknown-linux-gnueabihf
+
         # - name: macos-x86_64
         #   os: macos-latest
         #   target: x86_64-apple-darwin
+
         # - name: windows-x86_64-msvc
         #   os: windows-latest
         #   target: x86_64-pc-windows-msvc
@@ -38,13 +40,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      # - name: Toolchain
-      #   uses: actions-rs/toolchain@v1
-      #   with:
-      #     profile: minimal
-      #     toolchain: stable
-      #     target: ${{ matrix.target }}
-      #     override: true
+      - name: Toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          target: ${{ matrix.target }}
+          override: true
 
       # - name: Cache Toolchain
       #   uses: actions/cache@v2
@@ -55,12 +57,12 @@ jobs:
       #       ~/.rustup/update-hashes/${{ matrix.rust }}-*
       #     key: run-toolchain-rust_${{ matrix.rust }}
 
-      # - name: Build
-      #   uses: actions-rs/cargo@v1
-      #   with:
-      #     use-cross: true
-      #     command: build
-      #     args: --release --target=${{ matrix.target }}
+      - name: Build
+        uses: actions-rs/cargo@v1
+        with:
+          use-cross: true
+          command: build
+          args: --release --target=${{ matrix.target }}
 
       # - name: Cache Build
       #   uses: actions/cache@v2
@@ -71,8 +73,8 @@ jobs:
       #       target
       #     key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
-      # - name: Archive
-      #   run: tar czvf target/${{ env.project }}-${{ matrix.name }}.tgz -C target/${{ matrix.target }}/release ${{ env.project }}
+      - name: Archive
+        run: tar czvf target/${{ env.project }}-${{ matrix.name }}.tgz -C target/${{ matrix.target }}/release ${{ env.project }}
 
       # - name: Show
       #   run: find target
@@ -93,10 +95,11 @@ jobs:
       # - name: Docker digest
       #   run: echo ${{ steps.docker_build.outputs.digest }}
 
-      # - name: Upload binaries to release
-      #   uses: svenstaro/upload-release-action@v1-release
-      #   with:
-      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
-      #     file: target/${{ matrix.target }}/release/${{ env.project }}
-      #     asset_name: ${{ env.project }}-${{ matrix.name }}
-      #     tag: ${{ github.ref }}
+      - name: Upload
+        uses: svenstaro/upload-release-action@v1-release
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: target/${{ env.project }}-${{ matrix.name }}.tgz
+          asset_name: ${{ env.project }}-${{ matrix.name }}
+          tag: latest
+          # tag: ${{ github.ref }}

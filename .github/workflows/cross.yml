@@ -38,9 +38,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Docker
-        run: docker images && docker ps -a
-
       # - name: Toolchain
       #   uses: actions-rs/toolchain@v1
       #   with:

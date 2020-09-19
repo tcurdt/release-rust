@@ -15,12 +15,12 @@ jobs:
 
     - name: Toolchain
       uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          override: true
+      with:
+        toolchain: stable
+        override: true
 
     - name: Publish
       uses: actions-rs/cargo@v1
-        with:
-          command: publish
-          args: --token {{ "${{ secrets.CARGO_API_KEY " }}}} --allow-dirty
+      with:
+        command: publish
+        args: --token {{ "${{ secrets.CARGO_API_KEY " }}}} --allow-dirty

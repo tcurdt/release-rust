@@ -1,0 +1,24 @@
+name: crates
+
+on:
+  release:
+    types: [published]
+
+jobs:
+
+  crates:
+
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Toolchain
+      uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+
+    - name: Publish
+      uses: actions-rs/cargo@v1
+        with:
+          command: publish
+          args: --token {{ "${{ secrets.CARGO_API_KEY " }}}} --allow-dirty

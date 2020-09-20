@@ -1,6 +1,9 @@
 name: dockerhub
 
 on:
+  # push:
+  #   tags:
+  #     - 'v*'
   release:
     types: [published]
 

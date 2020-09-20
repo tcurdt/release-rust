@@ -1,9 +1,9 @@
 name: dockerhub
 
+env:
+  project: 'release-rust'
+
 on:
-  # push:
-  #   tags:
-  #     - 'v*'
   release:
     types: [published]
 

@@ -1,11 +1,11 @@
 name: dockerhub
 
-env:
-  project: 'release-rust'
-
 on:
   release:
     types: [published]
+
+env:
+  project: 'release-rust'
 
 jobs:
 

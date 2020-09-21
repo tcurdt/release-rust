@@ -3,6 +3,10 @@ name = "release-rust"
 version = "0.1.0"
 edition = "2018"
 
+description = "Just a test package for a rust github workflow"
+license = "MIT OR Apache-2.0"
+authors = [ "Torsten Curdt" ]
+
 # https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]

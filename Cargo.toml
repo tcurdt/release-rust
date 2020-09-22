@@ -1,6 +1,6 @@
 [package]
 name = "release-rust"
-version = "0.1.0"
+version = "0.0.5"
 edition = "2018"
 
 description = "Just a test package for a rust github workflow"

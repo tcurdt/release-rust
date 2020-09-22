@@ -66,6 +66,9 @@ jobs:
           use-cross: true
           command: test
 
+      - name: Version
+        uses: tcurdt/action-verify-version-cargo@master
+
       - name: Upload
         if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
         uses: actions/upload-artifact@v2

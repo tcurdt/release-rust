@@ -1,6 +1,6 @@
 name: ci
 
-on: [push, pull_request]
+on: [ push, pull_request ]
 
 env:
   project: 'release-rust'
@@ -80,7 +80,7 @@ jobs:
 
   release:
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
-    needs: [test]
+    needs: [ test ]
     runs-on: ubuntu-latest
     steps:
 

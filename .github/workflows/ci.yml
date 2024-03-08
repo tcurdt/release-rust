@@ -93,7 +93,7 @@ jobs:
         run: find artifacts -mindepth 1 -maxdepth 1  -exec tar -C {} -cvzf {}.tgz . \;
 
       - name: Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           files: |
             artifacts/*.tgz

@@ -1,4 +1,4 @@
-FROM rust:1.91-alpine as builder
+FROM rust:1.92-alpine as builder
 WORKDIR /app
 RUN echo "nobody:x:65534:65534:Nobody:/:" > /passwd
 RUN apk add --update --no-cache upx
